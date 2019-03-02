@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Paint</title>
+	<link href='style.css' rel="stylesheet">
+</head>
+
+<body>
+	<canvas id="canvas1" width="100%" height="100%"></canvas>
+	<h1 style="position:fixed;top:-1%;left:20px;color:rgba(47,204,84,1);font-family:sans-serif">Pixel Painter</h1>
+	<form style="position:fixed;top:3%;left:700px;color:rgba(47,204,84,1);">
+	<input type="button" value="Draw" onclick="draw()" style="width:90px;height:32px;">
+	Color:
+	<input type="color" id="1" onchange="f1()" style="width:90px;height:27px;" type="text" name="color" placeholder="color..">
+	Size:
+    <input id="2" onkeyup="f2()" style="width:90px;height:27px;" type="text" name="size" placeholder="font size..">
+    
+    <input type="button" value="Eraser" onclick="eraser()" style="width:90px;height:32px;background-color:#6b50c7;">
+ 
+    <input type="button" value="Eraser All" onclick="eraseAll()" style="width:90px;height:32px;background-color:#D72E42;">
+	</form>
+</body>
+<script>
+	var c=document.getElementById("canvas1");
+	var ctx=c.getContext('2d');
+	c.width=window.innerWidth*0.97;
+	c.height=window.innerHeight*0.82;
+    
+    var txt='black',text='';var siz=0,size=0;var erasersize=0;var es=0;
+	localStorage.setItem("txt",'black');
+	localStorage.setItem("siz",10);
+	localStorage.setItem("es",20);
+
+	var mouse={x:10,y:10};
+
+	var d=false;var x1=0;var y1=0;
+	 window.addEventListener("mousedown",t);
+	 window.addEventListener("mouseup",f);
+	 function t()
+	 {
+	 	d=true;
+	 }
+	 function f()
+	 {
+	 	d=false;
+	 }
+
+	 function draw()
+	 {
+	  localStorage.setItem("es",0);
+	  localStorage.setItem("siz",10);
+	  window.addEventListener("mousemove",
+	  function(event)
+	{
+	  mouse.x=event.x-10;
+	  mouse.y=event.y-67;
+
+	if(d)
+	{
+	ctx.beginPath();
+	ctx.fillStyle=localStorage.getItem("txt");
+	ctx.fillRect(mouse.x,mouse.y,localStorage.getItem("siz"),8);
+	ctx.fill();
+	}
+	});
+	}
+    
+    function eraseAll()
+    {
+    	alert('You sure you want to erase everything');
+    	ctx.clearRect(0,0,innerWidth,innerHeight);
+    }
+	function eraser()
+	{
+	  localStorage.setItem("siz",0);
+	  localStorage.setItem("es",30);
+	  window.addEventListener("mousemove",
+	  function(event)
+	{
+	  mouse.x=event.x-10;
+	  mouse.y=event.y-67;
+        if(d)
+	  	{
+	  	ctx.beginPath();
+		ctx.fillStyle="white";
+		ctx.fillRect(mouse.x,mouse.y,localStorage.getItem("es"),localStorage.getItem("es"));
+		ctx.fill();}
+	  });
+	}
+
+	function f1()
+	  {
+	  	var text=document.getElementById("1").value;
+	  	localStorage.setItem("txt",text);
+	  	draw();
+	  }
+
+	  function f2()
+	  {
+	  	var size=document.getElementById("2").value;
+	  	localStorage.setItem("siz",size);
+	  	draw();
+	  }
+	  
+	  
+</script>
+</html>

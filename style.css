@@ -1,0 +1,12 @@
+#canvas1
+	{
+		border:1px solid grey;
+		cursor:pointer;
+		background-color:white;
+		margin-left:10px;
+                margin-top:67px;
+	}
+	body
+	{
+		background-color:rgba(53,53,56,1) ;
+	}
